@@ -1,3 +1,4 @@
+from modules import script_callbacks
 import gradio as gr
 import json
 import sys
@@ -133,8 +134,8 @@ def save_metadata(edited_json: str, source_file: str, output_name: str) -> tuple
     except Exception as e:
         return None, f"Critical error: {str(e)}"
 
-def create_interface():
-    with gr.Blocks(title="LoRA Metadata Editor") as app:
+def on_ui_tabs():
+    with gr.Blocks(title="LoRA Metadata Editor", analytics_enabled=False) as lora_editor:
         gr.Markdown("# LoRA Metadata Editor")
         
         with gr.Tabs():
@@ -204,8 +205,4 @@ def create_interface():
             outputs=output_file
         )
 
-    return app
-
-if __name__ == "__main__":
-    interface = create_interface()
-    interface.launch()
+    return [(lora_editor, "Lora Metadata Editor", "lora_editor")]
